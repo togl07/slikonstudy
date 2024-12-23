@@ -3,9 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Adaptive Dropdown Menu</title>
+    <title>Responsive Dropdown Menu</title>
     <style>
-        /* Basic reset */
         * {
             margin: 0;
             padding: 0;
@@ -14,87 +13,139 @@
 
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
         }
 
-        /* Navbar container */
-        .navbar {
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            background-color: #333;
-            padding: 1rem;
+            z-index: 1000;
         }
 
-        /* Navbar links */
-        .navbar a {
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1rem;
-            display: block;
+        /* Hamburger Menu */
+        .bar {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
         }
 
-        .navbar a:hover {
-            background-color: #575757;
+        .bar span {
+            width: 25px;
+            height: 3px;
+            background-color: #fff;
+            border-radius: 3px;
+            transition: all 0.3s ease;
         }
 
-        /* Dropdown container */
-        .dropdown {
-            position: relative;
-            display: inline-block;
+        .bar.active span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
         }
 
-        /* Dropdown content (hidden by default) */
-        .dropdown-content {
-            display: none;
+        .bar.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .bar.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        /* Dropdown Menu */
+        .dropdown-menu {
+            list-style: none;
             position: absolute;
-            background-color: #f9f9f9;
-            min-width: 160px;
-            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            z-index: 1;
+            top: 60px;
+            right: 20px;
+            background-color: #444;
+            border-radius: 5px;
+            overflow: hidden;
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
         }
 
-        /* Dropdown links */
-        .dropdown-content a {
-            color: black;
-            padding: 12px 16px;
+        .dropdown-menu.active {
+            display: flex;
+        }
+
+        .dropdown-menu li {
+            border-bottom: 1px solid #555;
+        }
+
+        .dropdown-menu li:last-child {
+            border-bottom: none;
+        }
+
+        .dropdown-menu a {
             text-decoration: none;
+            color: #fff;
+            padding: 10px 20px;
             display: block;
+            transition: background-color 0.3s ease;
         }
 
-        .dropdown-content a:hover {
-            background-color: #f1f1f1;
-        }
-
-        /* Show the dropdown menu on hover */
-        .dropdown:hover .dropdown-content {
-            display: block;
+        .dropdown-menu a:hover {
+            background-color: #555;
         }
 
         /* Responsive adjustments */
-        @media (max-width: 600px) {
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
+        @media (min-width: 768px) {
+            .bar {
+                display: none;
             }
-            .navbar a {
-                padding: 0.5rem 0;
+
+            .dropdown-menu {
+                display: flex;
+                position: static;
+                flex-direction: row;
+                background: none;
+                box-shadow: none;
+            }
+
+            .dropdown-menu li {
+                border-bottom: none;
+            }
+
+            .dropdown-menu a {
+                padding: 10px 15px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#home">Home</a>
-        <a href="#about">About</a>
-        <div class="dropdown">
-            <a href="javascript:void(0)">Dropdown</a>
-            <div class="dropdown-content">
-                <a href="#link1">Link 1</a>
-                <a href="#link2">Link 2</a>
-                <a href="#link3">Link 3</a>
-            </div>
+    <header>
+        <h1>My Website</h1>
+        <!-- Hamburger Menu Button -->
+        <div class="bar" id="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
         </div>
-        <a href="#contact">Contact</a>
-    </div>
+
+        <!-- Dropdown Menu -->
+        <ul class="dropdown-menu" id="menu">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </header>
+
+    <script>
+        // Function to toggle the dropdown menu visibility and the hamburger icon
+        function toggleMenu() {
+            var menu = document.getElementById("menu");
+            var hamburger = document.getElementById("hamburger");
+            menu.classList.toggle("active"); // Toggle menu visibility
+            hamburger.classList.toggle("active"); // Toggle the icon (X or hamburger)
+        }
+    </script>
 </body>
 </html>
